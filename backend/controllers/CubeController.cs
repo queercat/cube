@@ -6,7 +6,7 @@ namespace backend.controllers;
 [Route("/data")]
 public class CubeController : ControllerBase
 {
-    private string connectionString = "Data Source=c:../database/cube.db;Version=3;";
+   
 
 
 
