@@ -5,6 +5,6 @@ public class CardInArchetype
 {
     public int CardInArchetypeId { get; set; }
     
-    public required Archtype Archtype { get; set; }
+    public required Archetype Archetype { get; set; }
     public required Card Card { get; set; }
 }

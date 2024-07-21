@@ -1,6 +1,6 @@
 namespace backend.entities;
 
-public class Archtype
+public class Archetype
 {
     public int ArchetypeId { get; set; }
     
