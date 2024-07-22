@@ -14,6 +14,9 @@ public class CubeService(CubeDbContext dbContext) : ICubeService
             .Select(c => new UserCubeModel(c.CubeName))
             .ToListAsync();
 
+        // mock data for page for now.
+        userCubesList.AddRange([new UserCubeModel("Rakdos Cats"), new UserCubeModel("Azorius Bats")]);
+        
         return userCubesList;
     }
     
