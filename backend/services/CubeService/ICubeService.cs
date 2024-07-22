@@ -1,11 +1,11 @@
 using backend.entities;
-using backend.types;
+using backend.Models;
 
 namespace backend.services;
 
 public interface ICubeService
 {
-    public Task<List<UserCubes>> GetUserCubes(int userId);
+    public Task<List<UserCubeModel>> GetUserCubes(int userId);
     
     
 }

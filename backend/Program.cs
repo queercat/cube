@@ -25,6 +25,7 @@ builder.Host.ConfigureContainer<ServiceCollection>(sc =>
     sc.AddControllers(); // Required for the builder to figure out all the dependencies for the controllers. Magic!
 });
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -40,7 +41,22 @@ app.MapControllers(); // Required for .NET to autodetect controllers that inheri
 
 if (args.Contains("--generate-api")) return;
 
-app.Run();
+// Allow CORS for localhost on any port, used https://stackoverflow.com/questions/57530680/enable-cors-for-any-port-on-localhost
+
+app.UseCors(policyBuilder =>
+{
+    {
+        if (app.Environment.IsDevelopment())
+        {
+            policyBuilder
+                .SetIsOriginAllowed(host => new Uri(host).Host == "localhost")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        }
+    }
+});
+
+app.Run("https://0.0.0.0:42069");
 
 
 

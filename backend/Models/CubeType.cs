@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace backend.types;
+namespace backend.Models;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum CubeType

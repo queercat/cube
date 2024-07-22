@@ -34,7 +34,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/UserCubes"
+                    "$ref": "#/components/schemas/UserCubeModel"
                   }
                 }
               },
@@ -42,7 +42,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/UserCubes"
+                    "$ref": "#/components/schemas/UserCubeModel"
                   }
                 }
               },
@@ -50,7 +50,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/UserCubes"
+                    "$ref": "#/components/schemas/UserCubeModel"
                   }
                 }
               }
@@ -62,106 +62,12 @@
   },
   "components": {
     "schemas": {
-      "Card": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "cardId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "oracleId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "CardInCube": {
-        "type": "object",
-        "properties": {
-          "cardInCubeId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "cube": {
-            "$ref": "#/components/schemas/Cube"
-          },
-          "card": {
-            "$ref": "#/components/schemas/Card"
-          }
-        },
-        "additionalProperties": false
-      },
-      "Cube": {
-        "required": [
-          "cubeId",
-          "cubeName",
-          "user"
-        ],
-        "type": "object",
-        "properties": {
-          "cubeId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "cubeName": {
-            "type": "string",
-            "nullable": true
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
-          },
-          "cardsInCube": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CardInCube"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "User": {
-        "required": [
-          "name",
-          "userId"
-        ],
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "cubes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Cube"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UserCubes": {
+      "UserCubeModel": {
         "type": "object",
         "properties": {
           "cubeName": {
             "type": "string",
             "nullable": true
-          },
-          "cube": {
-            "$ref": "#/components/schemas/Cube"
           }
         },
         "additionalProperties": false

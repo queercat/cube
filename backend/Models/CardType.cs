@@ -1,4 +1,4 @@
-namespace backend.types;
+namespace backend.Models;
 
 public class CardType
 {

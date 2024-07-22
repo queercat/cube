@@ -2,8 +2,7 @@ namespace backend.entities;
 
 public class Card
 {
-    public int CardId { get; set; }
-    public required string name { get; set; }
-    
-    public int OracleId { get; set; } 
+    public required int Id { get; set; }
+    public required string Name { get; set; }
+    public required int OracleId { get; set; } 
 }
