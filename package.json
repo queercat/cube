@@ -4,7 +4,10 @@
   "scripts": {
     "fullstack": "concurrently \"npm run frontend\"  \"npm run backend\"",
     "frontend": "cd frontend && npm run dev",
-    "backend": "cd backend && dotnet run"
+    "backend": "cd backend && dotnet run",
+    "generate-api:backend": "cd backend && dotnet run --generate-api",
+    "generate-api:frontend": "cd frontend && npm run generate-api",
+    "generate-api": "npm run generate-api:backend && npm run generate-api:frontend"
   },
   "repository": {
     "type": "git",
