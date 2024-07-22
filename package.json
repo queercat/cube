@@ -1,0 +1,17 @@
+{
+  "name": "cube",
+  "version": "0.0.0",
+  "scripts": {
+    "fullstack": "concurrently \"npm run frontend\"  \"npm run backend\"",
+    "frontend": "cd frontend && npm run dev",
+    "backend": "cd backend && dotnet run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/queercat/cube"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "private": true
+}
