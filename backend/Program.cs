@@ -13,12 +13,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Host.ConfigureContainer<ContainerBuilder>(b =>
+builder.Host.ConfigureContainer<ServiceCollection>(sc =>
 {
-    b.RegisterType<CubeService>().As<ICubeService>();
+    sc.AddDbContext<CubeDbContext>(options => options.UseSqlite(connectionString));
+    sc.AddScoped<ICubeService, CubeService>();
 });
-
-builder.Services.AddDbContext<CubeDbContext>(options => options.UseSqlite(connectionString));
 
 
 var app = builder.Build();
