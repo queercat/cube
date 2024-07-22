@@ -17,6 +17,7 @@ builder.Host.ConfigureContainer<ServiceCollection>(sc =>
 {
     sc.AddDbContext<CubeDbContext>(options => options.UseSqlite(connectionString));
     sc.AddScoped<ICubeService, CubeService>();
+    sc.AddControllers(); // Required for the builder to figure out all the dependencies for the controllers. Magic!
 });
 
 
@@ -30,8 +31,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-
+app.MapControllers(); // Required for .NET to autodetect controllers that inherit ControllerBase. Little less so but still kinda magic!
 
 app.Run();
 
