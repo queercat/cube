@@ -1,3 +1,4 @@
+using backend.services;
 using backend.services.CubeService;
 using backend.types;
 using Microsoft.AspNetCore.Mvc;
@@ -5,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.controllers;
 
 
-public class CubeController(CubeService cubeService) : ControllerBase
+public class CubeController(ICubeService cubeService) : ControllerBase
 {
 
     [HttpGet]
