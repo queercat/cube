@@ -4,7 +4,7 @@ using backend.services;
 using backend.services.CubeService;
 using Microsoft.EntityFrameworkCore;
 
-const string connectionString = "Data Source=../Database/cube.db;";
+const string connectionString = "Data Source=./Database/cube.db;";
 
 var builder = WebApplication.CreateBuilder(args);
 
