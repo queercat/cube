@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.context;
 
@@ -10,32 +11,22 @@ using backend.context;
 namespace backend.Migrations
 {
     [DbContext(typeof(CubeDbContext))]
-    partial class CubeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240728230622_AddsSeedDataForCards")]
+    partial class AddsSeedDataForCards
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.7");
-
-            modelBuilder.Entity("CardCube", b =>
-                {
-                    b.Property<int>("CardsId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CubesId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("CardsId", "CubesId");
-
-                    b.HasIndex("CubesId");
-
-                    b.ToTable("CardCube");
-                });
 
             modelBuilder.Entity("backend.entities.Card", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("CubeId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -46,6 +37,8 @@ namespace backend.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CubeId");
 
                     b.ToTable("Cards");
 
@@ -129,19 +122,11 @@ namespace backend.Migrations
                     b.ToTable("UserSessions");
                 });
 
-            modelBuilder.Entity("CardCube", b =>
+            modelBuilder.Entity("backend.entities.Card", b =>
                 {
-                    b.HasOne("backend.entities.Card", null)
-                        .WithMany()
-                        .HasForeignKey("CardsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("backend.entities.Cube", null)
-                        .WithMany()
-                        .HasForeignKey("CubesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Cards")
+                        .HasForeignKey("CubeId");
                 });
 
             modelBuilder.Entity("backend.entities.Cube", b =>
@@ -164,6 +149,11 @@ namespace backend.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("backend.entities.Cube", b =>
+                {
+                    b.Navigation("Cards");
                 });
 
             modelBuilder.Entity("backend.entities.User", b =>
