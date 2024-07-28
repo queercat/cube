@@ -5,6 +5,9 @@ namespace backend.context;
 
 public class CubeDbContext : DbContext
 {
+    
+    public DbSet<UserAuth> UserAuths { get; set; } // this feels like it shouldn't belong here.
+    
     public DbSet<Cube> Cubes { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Card> Cards { get; set; }
