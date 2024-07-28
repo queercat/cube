@@ -1,0 +1,20 @@
+{
+  "name": "cube",
+  "version": "0.0.0",
+  "scripts": {
+    "fullstack": "concurrently \"npm run frontend\"  \"npm run backend\"",
+    "frontend": "cd frontend && npm run dev",
+    "backend": "cd backend && dotnet run",
+    "generate-api:backend": "cd backend && dotnet run --generate-api",
+    "generate-api:frontend": "cd frontend && npm run generate-api",
+    "generate-api": "npm run generate-api:backend && npm run generate-api:frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/queercat/cube"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "private": true
+}
