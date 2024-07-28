@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.context;
 
@@ -10,9 +11,11 @@ using backend.context;
 namespace backend.Migrations
 {
     [DbContext(typeof(CubeDbContext))]
-    partial class CubeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240728224746_RemovesArchetypes")]
+    partial class RemovesArchetypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.7");
