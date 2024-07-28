@@ -3,22 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace backend.context;
 
-public class CubeDbContext : DbContext
+public class CubeDbContext(DbContextOptions<CubeDbContext> options) : DbContext(options)
 {
-    
-    public DbSet<UserAuth> UserAuths { get; set; } // this feels like it shouldn't belong here.
-    
-    public DbSet<Cube> Cubes { get; set; }
-    public DbSet<User> Users { get; set; }
-    public DbSet<Card> Cards { get; set; }
-    public DbSet<Archetype> Archetypes { get; set; }
-    public DbSet<CardInArchetype> CardsInArchetype { get; set; }
-    public DbSet<CardInCube> CardsInCube { get; set; }
-
-    public CubeDbContext( DbContextOptions<CubeDbContext> options) : base( options )
-    {
-        
-    }
-    
-    
+    public required DbSet<Cube> Cubes { get; set; }
+    public required DbSet<User> Users { get; set; }
+    public required DbSet<UserSession> UserSessions { get; set; }
+    public required DbSet<Card> Cards { get; set; }
+    public required DbSet<Archetype> Archetypes { get; set; }
+    public required DbSet<CardInArchetype> CardsInArchetype { get; set; }
+    public required DbSet<CardInCube> CardsInCube { get; set; }
 }

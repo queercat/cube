@@ -7,10 +7,10 @@ namespace backend.services.CubeService;
 
 public class CubeService(CubeDbContext dbContext) : ICubeService 
 {
-    public async Task<List<UserCubeModel>> GetUserCubes(int userId)
+    public async Task<List<UserCubeModel>> GetUserCubes(Guid userId)
     {
         var userCubesList = await dbContext.Cubes
-            .Where(c => c.User.UserId == userId)
+            .Where(c => c.User.Id == userId)
             .Select(c => new UserCubeModel(c.CubeName))
             .ToListAsync();
 

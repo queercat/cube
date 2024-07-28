@@ -5,7 +5,7 @@ namespace backend.services;
 
 public interface ICubeService
 {
-    public Task<List<UserCubeModel>> GetUserCubes(int userId);
+    public Task<List<UserCubeModel>> GetUserCubes(Guid userId);
     
     
 }
