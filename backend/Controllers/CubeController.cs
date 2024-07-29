@@ -6,11 +6,11 @@ namespace backend.controllers;
 
 
 [ApiController]
-[Route("/api/v1/")]
+[Route("/api/v1/cube")]
 public class CubeController(ICubeService cubeService) : ControllerBase
 {
 
-    [HttpGet("cube/{userId:guid}")]
+    [HttpGet("{userId:guid}")]
     public async Task<List<UserCubeModel>> GetCube([FromRoute] Guid userId) // I would like this to be a global variable
     {
         var cube = await cubeService.GetUserCubes(userId);

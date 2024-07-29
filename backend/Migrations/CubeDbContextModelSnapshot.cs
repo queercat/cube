@@ -84,6 +84,17 @@ namespace backend.Migrations
                     b.ToTable("Cubes");
                 });
 
+            modelBuilder.Entity("backend.entities.Nonce", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Nonces");
+                });
+
             modelBuilder.Entity("backend.entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -95,6 +106,10 @@ namespace backend.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Salt")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

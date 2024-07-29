@@ -3,7 +3,36 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { GetApiV1CubeByUserIdData, GetApiV1CubeByUserIdResponse } from './types.gen';
+import type { GetApiV1AuthNonceResponse, PostApiV1AuthLoginData, PostApiV1AuthLoginResponse, GetApiV1CubeByUserIdData, GetApiV1CubeByUserIdResponse } from './types.gen';
+
+export class AuthService {
+    /**
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static getApiV1AuthNonce(): CancelablePromise<GetApiV1AuthNonceResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/auth/nonce'
+        });
+    }
+    
+    /**
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns LoginResponse OK
+     * @throws ApiError
+     */
+    public static postApiV1AuthLogin(data: PostApiV1AuthLoginData = {}): CancelablePromise<PostApiV1AuthLoginResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/auth/login',
+            body: data.requestBody,
+            mediaType: 'application/json'
+        });
+    }
+    
+}
 
 export class CubeService {
     /**
