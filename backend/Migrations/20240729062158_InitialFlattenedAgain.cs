@@ -3,26 +3,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class InitalizeFlattened : Migration
+    public partial class InitialFlattenedAgain : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Archetypes",
-                columns: table => new
-                {
-                    ArchetypeId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Archetypes", x => x.ArchetypeId);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Cards",
                 columns: table => new
@@ -38,43 +28,29 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Nonces",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Nonces", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Username = table.Column<string>(type: "TEXT", nullable: false),
                     Password = table.Column<string>(type: "TEXT", nullable: false),
+                    Salt = table.Column<string>(type: "TEXT", nullable: false),
                     EmailAddress = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CardsInArchetype",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ArchetypeId = table.Column<int>(type: "INTEGER", nullable: false),
-                    CardId = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CardsInArchetype", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CardsInArchetype_Archetypes_ArchetypeId",
-                        column: x => x.ArchetypeId,
-                        principalTable: "Archetypes",
-                        principalColumn: "ArchetypeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CardsInArchetype_Cards_CardId",
-                        column: x => x.CardId,
-                        principalTable: "Cards",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -118,50 +94,42 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CardsInCube",
+                name: "CardCube",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CubeId = table.Column<int>(type: "INTEGER", nullable: false),
-                    CardId = table.Column<int>(type: "INTEGER", nullable: false)
+                    CardsId = table.Column<int>(type: "INTEGER", nullable: false),
+                    CubesId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CardsInCube", x => x.Id);
+                    table.PrimaryKey("PK_CardCube", x => new { x.CardsId, x.CubesId });
                     table.ForeignKey(
-                        name: "FK_CardsInCube_Cards_CardId",
-                        column: x => x.CardId,
+                        name: "FK_CardCube_Cards_CardsId",
+                        column: x => x.CardsId,
                         principalTable: "Cards",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CardsInCube_Cubes_CubeId",
-                        column: x => x.CubeId,
+                        name: "FK_CardCube_Cubes_CubesId",
+                        column: x => x.CubesId,
                         principalTable: "Cubes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_CardsInArchetype_ArchetypeId",
-                table: "CardsInArchetype",
-                column: "ArchetypeId");
+            migrationBuilder.InsertData(
+                table: "Cards",
+                columns: new[] { "Id", "Name", "OracleId" },
+                values: new object[,]
+                {
+                    { 1, "Princess Luna", 1 },
+                    { 2, "Pinkie Pie", 2 }
+                });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CardsInArchetype_CardId",
-                table: "CardsInArchetype",
-                column: "CardId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CardsInCube_CardId",
-                table: "CardsInCube",
-                column: "CardId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CardsInCube_CubeId",
-                table: "CardsInCube",
-                column: "CubeId");
+                name: "IX_CardCube_CubesId",
+                table: "CardCube",
+                column: "CubesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cubes_UserId",
@@ -178,16 +146,13 @@ namespace backend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CardsInArchetype");
+                name: "CardCube");
 
             migrationBuilder.DropTable(
-                name: "CardsInCube");
+                name: "Nonces");
 
             migrationBuilder.DropTable(
                 name: "UserSessions");
-
-            migrationBuilder.DropTable(
-                name: "Archetypes");
 
             migrationBuilder.DropTable(
                 name: "Cards");

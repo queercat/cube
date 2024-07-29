@@ -1,3 +1,3 @@
 ﻿namespace backend.Controllers.AuthController.Models;
 
-public record LoginResponse(bool Success, string? Message);
+public record LoginResponse(bool Success);

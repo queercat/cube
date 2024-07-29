@@ -23,6 +23,17 @@ public class AuthController(IAuthService authService, CubeDbContext cubeDbContex
     [HttpPost("login")]
     public async Task<LoginResponse> Login([FromBody] LoginRequest loginRequest)
     {
-        return await authService.HandleLogin(loginRequest);
+        var (loginResponse, sessionId) = await authService.HandleLogin(loginRequest);
+        
+        if (loginResponse.Success)
+        {
+            Response.Cookies.Append("session", sessionId.ToString(), new CookieOptions() { HttpOnly = true });
+        }
+        else
+        {
+            HttpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        }
+
+        return loginResponse;
     } 
 }

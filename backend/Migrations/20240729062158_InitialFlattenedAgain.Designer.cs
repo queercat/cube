@@ -11,8 +11,8 @@ using backend.context;
 namespace backend.Migrations
 {
     [DbContext(typeof(CubeDbContext))]
-    [Migration("20240728231425_AddsManyToMany")]
-    partial class AddsManyToMany
+    [Migration("20240729062158_InitialFlattenedAgain")]
+    partial class InitialFlattenedAgain
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -87,6 +87,17 @@ namespace backend.Migrations
                     b.ToTable("Cubes");
                 });
 
+            modelBuilder.Entity("backend.entities.Nonce", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Nonces");
+                });
+
             modelBuilder.Entity("backend.entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -98,6 +109,10 @@ namespace backend.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Salt")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

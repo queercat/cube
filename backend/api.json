@@ -165,10 +165,6 @@
         "properties": {
           "success": {
             "type": "boolean"
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false
