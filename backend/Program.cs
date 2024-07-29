@@ -2,6 +2,7 @@ using Autofac;
 using backend.context;
 using backend.Extensions;
 using backend.services;
+using backend.Services.AuthService;
 using backend.services.CubeService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -22,6 +23,7 @@ builder.Host.ConfigureContainer<ServiceCollection>(sc =>
 {
     sc.AddDbContext<CubeDbContext>(options => options.UseSqlite(connectionString));
     sc.AddScoped<ICubeService, CubeService>();
+    sc.AddScoped<IAuthService, AuthService>();
     sc.AddControllers(); // Required for the builder to figure out all the dependencies for the controllers. Magic!
 });
 

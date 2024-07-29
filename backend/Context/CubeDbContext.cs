@@ -12,6 +12,7 @@ public class CubeDbContext(DbContextOptions<CubeDbContext> options) : DbContext(
     public required DbSet<User> Users { get; set; }
     public required DbSet<UserSession> UserSessions { get; set; }
     public required DbSet<Card> Cards { get; set; }
+    public required DbSet<Nonce> Nonces { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
