@@ -12,7 +12,7 @@ public class Cube
     public required string CubeName { get; set; }
     public required User User { get; set; }
     
-    public required ICollection<Card> Cards { get; set; }
+    public ICollection<Card> Cards { get; set; }
 
 }
 
