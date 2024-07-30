@@ -19,5 +19,35 @@ public class CubeService(CubeDbContext dbContext) : ICubeService
         
         return userCubesList;
     }
+
+    public async Task<ActionResult> CreateCube(Guid userId, string cubeName)
+    {
+        ActionResult response;
+        
+        var newEntry = new Cube
+        {
+            Id = Guid.NewGuid(),
+            CubeName = cubeName,
+            User = await dbContext.User // I will have to check if this works how I hope it does
+                .Where(u => u.Id = userId)
+                .FirstOrDefaultAsync();
+        };
+
+        try
+        {
+            dbContext.Add<Cube>(newEntry);
+            response = OK();
+        }
+        catch (error)
+        {
+            Console.Write(error);
+            response = View("error"); // This was the first way to do a reponse to ActionResult failure I found
+        }
+        finally
+        {
+            dbContext.SaveChanges();
+            return response;
+        }
+    }
     
 }
