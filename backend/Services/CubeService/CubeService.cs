@@ -1,8 +1,6 @@
-using System.Net;
 using backend.context;
 using backend.entities;
 using backend.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
