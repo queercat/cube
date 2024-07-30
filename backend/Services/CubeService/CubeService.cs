@@ -1,6 +1,9 @@
+using System.Net;
 using backend.context;
 using backend.entities;
 using backend.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.services.CubeService;
@@ -22,32 +25,14 @@ public class CubeService(CubeDbContext dbContext) : ICubeService
 
     public async Task<ActionResult> CreateCube(Guid userId, string cubeName)
     {
-        ActionResult response;
-        
-        var newEntry = new Cube
-        {
-            Id = Guid.NewGuid(),
-            CubeName = cubeName,
-            User = await dbContext.User // I will have to check if this works how I hope it does
-                .Where(u => u.Id = userId)
-                .FirstOrDefaultAsync();
-        };
+        var user = await dbContext.Users
+            .FirstOrDefaultAsync(u => u.Id == userId);
 
-        try
-        {
-            dbContext.Add<Cube>(newEntry);
-            response = OK();
-        }
-        catch (error)
-        {
-            Console.Write(error);
-            response = View("error"); // This was the first way to do a reponse to ActionResult failure I found
-        }
-        finally
-        {
-            dbContext.SaveChanges();
-            return response;
-        }
+        if (user == null) return new NotFoundResult();
+
+        dbContext.Add(new Cube() { CubeName = cubeName, User = user, Cards = [] });
+        await dbContext.SaveChangesAsync();
+        return new OkResult();
     }
     
 }

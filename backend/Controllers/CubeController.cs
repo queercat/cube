@@ -18,12 +18,11 @@ public class CubeController(ICubeService cubeService) : ControllerBase
         return cube;
     }
 
-    [HttpPost("{userId:guid , cubeName:string}")]
+    [HttpPost("/create/{userId:guid}/{cubeName}")]
     public async Task<ActionResult> CreateCube([FromRoute] Guid userId, [FromRoute] string cubeName)
     {
         var response = await cubeService.CreateCube(userId, cubeName);
-
-        return await response; // I froget if this has to be awaited here or not.
+        return response;
     }
 
 
